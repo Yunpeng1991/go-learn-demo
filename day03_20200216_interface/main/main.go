@@ -11,6 +11,9 @@ func main() {
 
 	contents := retriever.Get("https://y.qq.com/")
 
+	//test timeout
+	retriever.Get("https://www.google.com")
+
 	fmt.Printf("the length is %d\n", len(contents))
 
 }

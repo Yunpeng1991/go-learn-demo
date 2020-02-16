@@ -38,7 +38,11 @@ func (r *Retriever) Get(url string) string {
 			fmt.Println(content)
 			r.Contents = content
 			return content
+		} else {
+			fmt.Println(err)
 		}
+	} else {
+		fmt.Println(err)
 	}
 	return ""
 
