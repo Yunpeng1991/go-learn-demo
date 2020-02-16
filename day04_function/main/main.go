@@ -34,4 +34,14 @@ func main() {
 		fmt.Println(fibonacci())
 	}
 
+	fmt.Printf("---------------{%s}----------------\n", "斐波那契完毕　")
+
+	fmt.Printf("\n---------------{%s}----------------\n", "斐波那契生成器")
+
+	fibonacci2 := function.Fibonacci2()
+
+	function.PrintFileContents(fibonacci2)
+
+	fmt.Printf("\n---------------{%s}----------------\n", "斐波那契生成器完毕")
+
 }

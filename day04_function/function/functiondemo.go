@@ -1,5 +1,12 @@
 package function
 
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"strings"
+)
+
 //very important
 /*return a adder function (闭包)**/
 func Adder() func(int) int {
@@ -23,10 +30,41 @@ func AdderSum(base int) func(int) (int, iAdder) {
 	}
 }
 
+//斐波那契
 func Fibonacci() func() int {
 	a, b := 0, 1
 	return func() int {
 		a, b = b, a+b
 		return a
+	}
+}
+
+//
+
+func Fibonacci2() GenFibonacci {
+	a, b := 0, 1
+	return func() int {
+		a, b = b, a+b
+		return a
+	}
+}
+
+type GenFibonacci func() int
+
+func (gen GenFibonacci) Read(data []byte) (i int, err error) {
+	next := gen()
+	if next > 10000 {
+		return 0, io.EOF
+	}
+	s := fmt.Sprintf("%d\n", next)
+	//Read(data) 将data写入(gen GenFibonacci) Read(data []byte)(i int,err error)
+	// if p is small ,will has a bug, nee a buffer to resolve
+	return strings.NewReader(s).Read(data)
+}
+
+func PrintFileContents(read io.Reader) {
+	scanner := bufio.NewScanner(read)
+	for scanner.Scan() {
+		fmt.Println(scanner.Text())
 	}
 }
