@@ -54,6 +54,7 @@ type GenFibonacci func() int
 func (gen GenFibonacci) Read(data []byte) (i int, err error) {
 	next := gen()
 	if next > 10000 {
+		//stop scan
 		return 0, io.EOF
 	}
 	s := fmt.Sprintf("%d\n", next)
