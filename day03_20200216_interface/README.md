@@ -11,7 +11,8 @@ type Retriever interface{ Get(url string)string }
 ```
 
 ## 接口实现
-主要是类型就可以实现接口  
+1\主要是类型就可以实现接口  
+2\必须实现接口的所有func才算实现接口
 ```go
 package main
 
