@@ -1,15 +1,23 @@
 package testserver
 
 import (
+	"fmt"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 )
+
+const httpPath = "/test/"
 
 func TestServer() {
 	http.HandleFunc("/test/", func(writer http.ResponseWriter, request *http.Request) {
-		path := request.URL.Path[len("/test/"):]
+		if strings.Index(request.URL.Path, httpPath) != 0 {
+			http.Error(writer, fmt.Sprintf("path not exist %s", request.URL.Path), http.StatusNotFound)
+			return
+		}
+		path := request.URL.Path[len(httpPath):]
 		open, err := os.Open(path)
 		if err != nil {
 			errorHandler(writer, err)

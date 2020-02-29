@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	log "github.com/sirupsen/logrus"
+	"learn-demo/day06_20200218_errordeal/testserver"
 	"os"
 )
 
@@ -11,10 +12,16 @@ func main() {
 
 	writeFile()
 
-	//testserver.TestServer()
+	testserver.TestServer()
 
 	recoverDemo()
 
+}
+
+type userError interface {
+	//identify message
+	Message() string
+	error
 }
 
 /**
@@ -22,15 +29,16 @@ func main() {
 */
 func recoverDemo() {
 	defer func() {
-		r := recover()
-		if err, ok := r.(error); ok {
-			//scene
-			log.Warn("deal error", err.Error())
-		} else {
+		if r := recover(); r != nil {
+			if err, ok := r.(error); ok {
+				//scene
+				log.Warn("deal error", err.Error())
+			} else {
 
-			//scene 2
-			// note : print recover , not err, because err is not recognized
-			panic(fmt.Sprintf("i don`t konw this error %v", r))
+				//scene 2
+				// note : print recover , not err, because err is not recognized
+				panic(fmt.Sprintf("i don`t konw this error %v", r))
+			}
 		}
 	}()
 
