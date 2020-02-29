@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	"errors"
+	"fmt"
 	log "github.com/sirupsen/logrus"
 	"os"
 )
@@ -24,11 +24,21 @@ func recoverDemo() {
 	defer func() {
 		r := recover()
 		if err, ok := r.(error); ok {
+			//scene
 			log.Warn("deal error", err.Error())
+		} else {
+
+			//scene 2
+			// note : print recover , not err, because err is not recognized
+			panic(fmt.Sprintf("i don`t konw this error %v", r))
 		}
 	}()
 
-	panic(errors.New("NullPointException"))
+	//tes scene 1
+	//panic(errors.New("NullPointException"))
+
+	//test scene 2
+	panic(123)
 }
 
 func writeFile() {
@@ -48,3 +58,5 @@ func writeFile() {
 	writer.WriteString("i am a good boy")
 
 }
+
+//32 class
