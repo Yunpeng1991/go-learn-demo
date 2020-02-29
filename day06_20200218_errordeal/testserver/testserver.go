@@ -11,17 +11,39 @@ func TestServer() {
 		path := request.URL.Path[len("/test/"):]
 		open, err := os.Open(path)
 		if err != nil {
-			panic(err)
+			errorHandler(writer, err)
+			//don`t forget return it
+			return
 		}
 		defer open.Close()
 
 		file, err := ioutil.ReadAll(open)
 		if err != nil {
-			panic(err)
+			errorHandler(writer, err)
+			return
 		}
-		writer.Write(file)
+		_, err = writer.Write(file)
+		if err != nil {
+			errorHandler(writer, err)
+			return
+		}
 	})
 
-	http.ListenAndServe(":8808", nil)
+	err := http.ListenAndServe(":8808", nil)
 
+	if err != nil {
+		panic(err)
+	}
+
+}
+
+func errorHandler(writer http.ResponseWriter, err error) {
+	code := http.StatusOK
+	switch {
+	case os.IsNotExist(err):
+		code = http.StatusNotFound
+	default:
+		code = http.StatusInternalServerError
+	}
+	http.Error(writer, http.StatusText(code), code)
 }
