@@ -1,6 +1,7 @@
 package testserver
 
 import (
+	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -38,6 +39,7 @@ func TestServer() {
 }
 
 func errorHandler(writer http.ResponseWriter, err error) {
+	log.Warn("http error ", err.Error())
 	code := http.StatusOK
 	switch {
 	case os.IsNotExist(err):

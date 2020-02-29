@@ -14,9 +14,11 @@
 ---
 
 #错误处理
+recover
+defer
+panic
 
 
-
-
+errors
 os包  
 bufio包

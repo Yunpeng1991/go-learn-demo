@@ -2,15 +2,33 @@ package main
 
 import (
 	"bufio"
-	"learn-demo/day06_20200218_errordeal/testserver"
+	"errors"
+	log "github.com/sirupsen/logrus"
 	"os"
 )
 
 func main() {
 
 	writeFile()
-	testserver.TestServer()
 
+	//testserver.TestServer()
+
+	recoverDemo()
+
+}
+
+/**
+  just like try-catch
+*/
+func recoverDemo() {
+	defer func() {
+		r := recover()
+		if err, ok := r.(error); ok {
+			log.Warn("deal error", err.Error())
+		}
+	}()
+
+	panic(errors.New("NullPointException"))
 }
 
 func writeFile() {
