@@ -2,12 +2,14 @@ package main
 
 import (
 	"bufio"
+	"learn-demo/day06_20200218_errordeal/testserver"
 	"os"
 )
 
 func main() {
 
 	writeFile()
+	testserver.TestServer()
 
 }
 
@@ -26,4 +28,5 @@ func writeFile() {
 	defer writer.Flush()
 
 	writer.WriteString("i am a good boy")
+
 }
